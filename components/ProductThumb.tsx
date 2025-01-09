@@ -1,5 +1,6 @@
 import { imageUrl } from '@/lib/imageUrl';
 import { Product } from '@/sanity.types'
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
@@ -7,17 +8,18 @@ const ProductThumb = ({ product }: { product: Product }) => {
     const isOutOfStock = product.stock != null && product.stock <= 0;
     return (
         <Link
-            href={`/products/${product.slug?.current}`}
+            href={`/product/${product.slug?.current}`}
             className={`group flex flex-col bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden ${isOutOfStock ? "opacity-50" : ""}`}
         >
             <div className='relative aspect-square w-full h-full overflow-hidden'>
                 {
                     product.image && (
-                        <img
+                        <Image
                             src={imageUrl(product.image).url()}
                             alt={product.name || 'Product Image'}
                             className='object-contain transition-transform duration-300 group-hover:scale-105'
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            fill
                         />
                     )
                 }
